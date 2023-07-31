@@ -1,5 +1,4 @@
-import 'package:demo_calendar/widgets/monthy_calendar.dart';
-import 'package:demo_calendar/widgets/weekly_calendar.dart';
+import 'package:demo_calendar/calendar/calendar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
@@ -12,6 +11,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  final myCalendar = MyCalendar();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,10 +20,22 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text(widget.title),
       ),
-      body: const Center(
+      body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[MonthlyCalendar()],
+          children: <Widget>[
+            // const MonthlyCalendar(),
+            TextButton(
+                onPressed: () {
+                  myCalendar.getCalendar();
+                },
+                child: const Text('Show event')),
+            TextButton(
+                onPressed: () {
+                  myCalendar.signIn();
+                },
+                child: const Text('sign in')),
+          ],
         ),
       ),
     );
