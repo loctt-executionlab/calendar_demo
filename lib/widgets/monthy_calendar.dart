@@ -1,12 +1,14 @@
 import 'package:demo_calendar/models/event.dart';
+import 'package:demo_calendar/notifier/event_notifier.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class MonthlyCalendar extends StatelessWidget {
+class MonthlyCalendar extends ConsumerWidget {
   const MonthlyCalendar({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return TableCalendar<CalendarEvent>(
       rowHeight: 100,
       onFormatChanged: (format) {},
@@ -20,36 +22,11 @@ class MonthlyCalendar extends StatelessWidget {
         return false;
       },
       eventLoader: (day) {
-        if (DateUtils.isSameDay(day, DateTime(2023, 7, 28))) {
-          print('is same');
-          return [
-            const CalendarEvent(
-                name: 'Retrospective calendar dev',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: '',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-          ];
-        }
-        return [];
+        print(day);
+        final list =
+            ref.watch(eventNotifierProvider.notifier).getEventByDate(day);
+        print(list.length);
+        return list;
       },
       calendarStyle: const CalendarStyle(
         cellAlignment: Alignment.topCenter,
@@ -68,30 +45,6 @@ class MonthlyCalendar extends StatelessWidget {
               Text(
                 day.day.toString(),
                 style: const TextStyle(color: Colors.blue),
-              ),
-            ],
-          );
-        },
-        selectedBuilder: (context, day, focusedDay) {
-          return Container(
-            decoration: BoxDecoration(border: Border.all()),
-            constraints: const BoxConstraints.expand(),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  day.day.toString(),
-                ),
-              ],
-            ),
-          );
-        },
-        outsideBuilder: (context, day, focusedDay) {
-          return Column(
-            children: [
-              Text(
-                day.day.toString(),
-                style: const TextStyle(color: Colors.black45),
               ),
             ],
           );
@@ -117,6 +70,7 @@ class MonthlyCalendar extends StatelessWidget {
                                 Flexible(
                                   child: Text(
                                     e.name,
+                                    maxLines: 1,
                                     textScaleFactor: 0.7,
                                     overflow: TextOverflow.ellipsis,
                                   ),
@@ -130,10 +84,35 @@ class MonthlyCalendar extends StatelessWidget {
                     ...events
                         .map((e) => Text(
                               e.name,
+                              maxLines: 1,
                               textScaleFactor: 0.7,
                             ))
                         .toList(),
                   ],
+          );
+        },
+        selectedBuilder: (context, day, focusedDay) {
+          return Container(
+            decoration: BoxDecoration(border: Border.all()),
+            constraints: const BoxConstraints.expand(),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  day.day.toString(),
+                ),
+              ],
+            ),
+          );
+        },
+        outsideBuilder: (context, day, focusedDay) {
+          return Column(
+            children: [
+              Text(
+                day.day.toString(),
+                style: const TextStyle(color: Colors.black45),
+              ),
+            ],
           );
         },
       ),

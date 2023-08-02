@@ -23,34 +23,6 @@ class WeeklyCalendar extends StatelessWidget {
         return false;
       },
       eventLoader: (day) {
-        if (DateUtils.isSameDay(day, DateTime(2023, 7, 28))) {
-          return [
-            const CalendarEvent(
-                name: 'Retrospective calendar dev',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: '',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-            const CalendarEvent(
-                name: 'jlkj',
-                startTime: TimeOfDay(hour: 2, minute: 12),
-                duration: Duration(hours: 2)),
-          ];
-        }
         return [];
       },
       calendarStyle: const CalendarStyle(

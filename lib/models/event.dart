@@ -1,8 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:googleapis/calendar/v3.dart';
 
 class CalendarEvent {
   final String name;
-  final TimeOfDay startTime;
+  final DateTime startTime;
   final Duration duration;
 
   const CalendarEvent({
@@ -10,4 +10,14 @@ class CalendarEvent {
     required this.startTime,
     required this.duration,
   });
+
+  static CalendarEvent fromGoogleApiEvent(Event event) {
+    print(
+        'google event: ${event.originalStartTime?.dateTime} ${event.start?.dateTime}');
+    final startTime = event.start?.dateTime ?? DateTime.now();
+    final endTime = event.end?.date ?? startTime;
+    final duration = endTime.difference(startTime);
+    return CalendarEvent(
+        name: event.summary ?? '', startTime: startTime, duration: duration);
+  }
 }
