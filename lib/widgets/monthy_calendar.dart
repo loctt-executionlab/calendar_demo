@@ -22,10 +22,8 @@ class MonthlyCalendar extends ConsumerWidget {
         return false;
       },
       eventLoader: (day) {
-        print(day);
         final list =
             ref.watch(eventNotifierProvider.notifier).getEventByDate(day);
-        print(list.length);
         return list;
       },
       calendarStyle: const CalendarStyle(

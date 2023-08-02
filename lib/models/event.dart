@@ -12,8 +12,6 @@ class CalendarEvent {
   });
 
   static CalendarEvent fromGoogleApiEvent(Event event) {
-    print(
-        'google event: ${event.originalStartTime?.dateTime} ${event.start?.dateTime}');
     final startTime = event.start?.dateTime ?? DateTime.now();
     final endTime = event.end?.date ?? startTime;
     final duration = endTime.difference(startTime);

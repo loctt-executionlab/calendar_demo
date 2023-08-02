@@ -11,20 +11,18 @@ class EventNotifier extends _$EventNotifier {
 
   @override
   List<CalendarEvent> build() {
-    getEvent();
+    _getEvent();
     return [];
   }
 
-  getEvent() async {
-    print('run get function');
+  _getEvent() async {
     if (api == null) {
       print(
           'calendar api not initialize, most likely auth client is not established');
       return;
     }
 
-    print('get function not null');
-    final events = await api!.events.list('primary');
+    final events = await api!.events.list('primary', singleEvents: true);
     final items = events.items;
     if (items == null) return;
     state = items.map((e) {
@@ -37,7 +35,7 @@ class EventNotifier extends _$EventNotifier {
         .where((element) => DateUtils.isSameDay(date, element.startTime))
         .toList();
     for (var date in result) {
-      print('current date is ${date.startTime}');
+      debugPrint('current date is ${date.startTime}');
     }
     return result;
   }

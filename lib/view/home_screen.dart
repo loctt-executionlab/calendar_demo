@@ -1,4 +1,3 @@
-import 'package:demo_calendar/notifier/event_notifier.dart';
 import 'package:demo_calendar/view/login_drawer.dart';
 import 'package:demo_calendar/widgets/monthy_calendar.dart';
 import 'package:flutter/material.dart';
