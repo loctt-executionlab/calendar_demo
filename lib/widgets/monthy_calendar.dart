@@ -9,12 +9,13 @@ class MonthlyCalendar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final ScrollController scrollController = ScrollController();
     return TableCalendar<CalendarEvent>(
       rowHeight: 100,
-      onFormatChanged: (format) {},
-      calendarFormat: CalendarFormat.month,
-      availableCalendarFormats: const {CalendarFormat.month: 'month'},
+      calendarFormat: CalendarFormat.week,
+      availableCalendarFormats: const {CalendarFormat.week: 'week'},
       availableGestures: AvailableGestures.all,
+      weekNumbersVisible: true,
       selectedDayPredicate: (day) {
         if (DateUtils.isSameDay(day, DateTime(2023, 7, 25))) {
           return true;
@@ -30,15 +31,32 @@ class MonthlyCalendar extends ConsumerWidget {
         cellAlignment: Alignment.topCenter,
       ),
       calendarBuilders: CalendarBuilders(
+        weekNumberBuilder: (context, weekNumber) {
+          return SizedBox(
+            width: 20,
+            child: Text(weekNumber.toString()),
+          );
+        },
         defaultBuilder: (context, day, focusedDay) {
-          return Column(
+          return ListView(
+            controller: scrollController,
             children: [
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
+              Text(day.day.toString()),
               Text(day.day.toString()),
             ],
           );
         },
         todayBuilder: (context, day, focusedDay) {
-          return Column(
+          return ListView(
             children: [
               Text(
                 day.day.toString(),

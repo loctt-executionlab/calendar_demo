@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:timetable/timetable.dart';
 
 import 'view/home_screen.dart';
 
@@ -9,6 +10,9 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        TimetableLocalizationsDelegate(),
+      ],
       title: 'Flutter Demo',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

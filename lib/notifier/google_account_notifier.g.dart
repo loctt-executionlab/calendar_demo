@@ -21,7 +21,7 @@ final googleSignInProvider = Provider<GoogleSignIn>.internal(
 
 typedef GoogleSignInRef = ProviderRef<GoogleSignIn>;
 String _$onGoogleAccountChangeHash() =>
-    r'e46bfa51e4d0be54f6036850565f424ceaecb918';
+    r'b688af7413e1fcb4a6653d851990ba944c545204';
 
 /// See also [onGoogleAccountChange].
 @ProviderFor(onGoogleAccountChange)
@@ -38,7 +38,7 @@ final onGoogleAccountChangeProvider =
 
 typedef OnGoogleAccountChangeRef
     = AutoDisposeProviderRef<BehaviorSubject<GoogleSignInAccount?>>;
-String _$gCalendarApiHash() => r'54be22dac7905f80ef5aa552fc29f228c69dd6b6';
+String _$gCalendarApiHash() => r'035afdc515834c414aacef6137775017889d287c';
 
 /// See also [GCalendarApi].
 @ProviderFor(GCalendarApi)

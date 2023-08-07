@@ -1,5 +1,5 @@
 import 'package:demo_calendar/view/login_drawer.dart';
-import 'package:demo_calendar/widgets/monthy_calendar.dart';
+import 'package:demo_calendar/widgets/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -20,9 +20,13 @@ class HomeScreen extends ConsumerWidget {
       ),
       body: const Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
-            MonthlyCalendar(),
+            Expanded(
+              child: SizedBox(
+                child: WeeklyTimetable(),
+              ),
+            ),
             // TextButton(onPressed: () {}, child: const Text('Show event')),
             // TextButton(onPressed: () {}, child: const Text('log in')),
             // TextButton(onPressed: () {}, child: const Text('get client')),

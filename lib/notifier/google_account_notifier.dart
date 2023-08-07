@@ -24,6 +24,7 @@ BehaviorSubject<GoogleSignInAccount?> onGoogleAccountChange(
     OnGoogleAccountChangeRef ref) {
   final BehaviorSubject<GoogleSignInAccount?> stream = BehaviorSubject();
   ref.watch(googleSignInProvider).onCurrentUserChanged.listen((event) {
+    print('getting current user');
     stream.add(event);
   });
   return stream;
@@ -33,13 +34,17 @@ BehaviorSubject<GoogleSignInAccount?> onGoogleAccountChange(
 class GCalendarApi extends _$GCalendarApi {
   @override
   CalendarApi? build() {
-    ref.watch(onGoogleAccountChangeProvider).listen((value) {
-      final gAuthInstance = ref.watch(googleSignInProvider);
-      gAuthInstance.authenticatedClient().then((client) {
-        if (client == null) return;
-        state = CalendarApi(client);
-      });
-    });
+    _init();
+    ref.watch(onGoogleAccountChangeProvider).listen((_) => _init());
     return null;
+  }
+
+  _init() {
+    final gAuthInstance = ref.watch(googleSignInProvider);
+    gAuthInstance.authenticatedClient().then((client) {
+      print('client initialize');
+      if (client == null) return;
+      state = CalendarApi(client);
+    });
   }
 }
