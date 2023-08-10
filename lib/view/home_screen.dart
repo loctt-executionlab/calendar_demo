@@ -1,7 +1,9 @@
+import 'package:demo_calendar/router/router.dart';
 import 'package:demo_calendar/view/login_drawer.dart';
 import 'package:demo_calendar/widgets/time_table.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -12,6 +14,13 @@ class HomeScreen extends ConsumerWidget {
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Calendar'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                context.goNamed(Routes.add.name);
+              },
+              icon: const Icon(Icons.add))
+        ],
       ),
       drawer: const Drawer(
         child: SafeArea(

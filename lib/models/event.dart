@@ -2,9 +2,11 @@ import 'package:googleapis/calendar/v3.dart' as api;
 import 'package:timetable/timetable.dart';
 
 class CalendarEvent extends Event {
+  final Object id;
   final String name;
 
   const CalendarEvent({
+    required this.id,
     required this.name,
     required super.start,
     required super.end,
@@ -15,6 +17,9 @@ class CalendarEvent extends Event {
     print(startTime);
     final endTime = event.end?.dateTime?.toUtc() ?? startTime;
     return CalendarEvent(
-        name: event.summary ?? '', start: startTime, end: endTime);
+        id: event.id ?? '',
+        name: event.summary ?? '',
+        start: startTime,
+        end: endTime);
   }
 }

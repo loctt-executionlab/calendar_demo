@@ -1,7 +1,6 @@
+import 'package:demo_calendar/router/router.dart';
 import 'package:flutter/material.dart';
 import 'package:timetable/timetable.dart';
-
-import 'view/home_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -9,7 +8,7 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return MaterialApp.router(
       localizationsDelegates: const [
         TimetableLocalizationsDelegate(),
       ],
@@ -18,7 +17,7 @@ class App extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      routerConfig: router,
     );
   }
 }
