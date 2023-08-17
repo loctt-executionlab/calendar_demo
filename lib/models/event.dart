@@ -14,12 +14,12 @@ class CalendarEvent extends Event {
 
   static CalendarEvent fromGoogleApiEvent(api.Event event) {
     final startTime = event.start?.dateTime?.toUtc() ?? DateTime.now().toUtc();
-    print(startTime);
     final endTime = event.end?.dateTime?.toUtc() ?? startTime;
     return CalendarEvent(
-        id: event.id ?? '',
-        name: event.summary ?? '',
-        start: startTime,
-        end: endTime);
+      id: event.id ?? '',
+      name: event.summary ?? '',
+      start: startTime,
+      end: endTime,
+    );
   }
 }

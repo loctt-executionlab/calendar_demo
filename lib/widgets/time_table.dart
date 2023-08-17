@@ -8,13 +8,10 @@ import 'package:collection/collection.dart';
 class WeeklyTimetable extends HookConsumerWidget {
   const WeeklyTimetable({Key? key}) : super(key: key);
 
-  dosomething() {
-    print('rebuilt disposed');
-  }
+  dosomething() {}
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    print('rebuilt');
     useAutomaticKeepAlive();
     final controller = useMemoized(() => DateController(
         initialDate: DateTimeTimetable.today(),
@@ -27,7 +24,6 @@ class WeeklyTimetable extends HookConsumerWidget {
     final events = ref.watch(eventNotifierProvider);
 
     final draggedEvents = useValueNotifier<List<BasicEvent>>([]);
-    print('rebuilt event count ${draggedEvents.value.length}');
     return LayoutBuilder(
       builder: (context, constraints) {
         return TimetableConfig<BasicEvent>(
@@ -79,10 +75,6 @@ class WeeklyTimetable extends HookConsumerWidget {
           },
           timeOverlayProvider: mergeTimeOverlayProviders([
             (context, date) {
-              print('rebuilt at  a${draggedEvents.value.length}');
-              if (draggedEvents.value.isNotEmpty) {
-                print(' rebuilt at ${draggedEvents.value.first.start}');
-              }
               return draggedEvents.value
                   .map(
                     (it) => it.toTimeOverlay(

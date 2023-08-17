@@ -1,4 +1,6 @@
-import 'package:demo_calendar/widgets/inline_datepicker.dart';
+import 'package:demo_calendar/models/event.dart';
+import 'package:demo_calendar/notifier/event_notifier.dart';
+import 'package:demo_calendar/widgets/date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -9,45 +11,73 @@ class AddScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final nameTxtController = useTextEditingController();
+    final initialTime = DateTime.now();
+    final start = useValueNotifier(
+      initialTime
+          .roundTimeToMultipleOf(const Duration(minutes: 5))
+          .copyWith(isUtc: true),
+    );
+    final end = useValueNotifier(initialTime
+        .roundTimeToMultipleOf(const Duration(minutes: 5))
+        .add(
+          const Duration(hours: 1),
+        )
+        .copyWith(isUtc: true));
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Add event'),
         leading: const BackButton(),
-        actions: [
-          TextButton(onPressed: () {}, child: const Icon(Icons.punch_clock))
-        ],
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(12.0),
+      body: Column(
         children: [
-          const TextField(
-            decoration: InputDecoration(
-              hintText: 'Title',
-              hintStyle: TextStyle(
-                fontSize: 24,
-              ),
-              enabledBorder: UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.black12),
-              ),
+          Expanded(
+            child: ListView(
+              padding: const EdgeInsets.all(12.0),
+              children: [
+                TextField(
+                  controller: nameTxtController,
+                  decoration: const InputDecoration(
+                    hintText: 'Title',
+                    hintStyle: TextStyle(
+                      fontSize: 24,
+                    ),
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.black12),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 36),
+                DateTimePicker(
+                  start: start,
+                  end: end,
+                )
+              ],
             ),
           ),
-          const SizedBox(height: 36),
-          Row(
-            children: [
-              Icon(
-                Icons.schedule,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              const SizedBox(width: 24),
-              const Text('All day', style: TextStyle(fontSize: 20)),
-              const Spacer(),
-              Switch(
-                value: true,
-                onChanged: (value) {},
-              ),
-            ],
-          ),
-          const InlineDatepicker()
+          SafeArea(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                IconButton(onPressed: () {}, icon: const Icon(Icons.close)),
+                IconButton(
+                    onPressed: () async {
+                      final event = CalendarEvent(
+                        id: '',
+                        name: nameTxtController.text,
+                        start: start.value,
+                        end: end.value,
+                      );
+                      await ref
+                          .read(eventNotifierProvider.notifier)
+                          .addEvent(event);
+                      return;
+                    },
+                    icon: const Icon(Icons.done))
+              ],
+            ),
+          )
         ],
       ),
     );
