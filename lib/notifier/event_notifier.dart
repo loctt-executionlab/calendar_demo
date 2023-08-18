@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:demo_calendar/models/event.dart';
 import 'package:demo_calendar/models/event_ext.dart';
 import 'package:demo_calendar/notifier/google_account_notifier.dart';
@@ -10,34 +12,42 @@ part 'event_notifier.g.dart';
 @riverpod
 class EventNotifier extends _$EventNotifier {
   CalendarApi? get api => ref.watch(gCalendarApiProvider);
+
   @override
   List<CalendarEvent> build() {
-    _getEvent();
-    ref.listen(googleSignInProvider, (previous, next) {
-      next.authenticatedClient().then((value) {
-        if (value != null) {
-          CalendarApi(value);
-          _getEvent();
-        }
-      });
-    });
+    _getEventPeriodically();
+    ref.listen(
+      googleSignInProvider,
+      (previous, next) {
+        next.authenticatedClient().then((value) {
+          if (value != null) {
+            _getEventPeriodically();
+          }
+        });
+      },
+    );
 
     return [];
   }
 
-  _getEvent() async {
+  _getEventPeriodically() {
     if (api == null) {
       print(
           'calendar api not initialize, most likely auth client is not established');
       return;
     }
+    _getEvent();
+    final timer =
+        Timer.periodic(const Duration(seconds: 10), (timer) => _getEvent());
+  }
 
+  _getEvent() async {
     final events = await api!.events
         .list('primary', singleEvents: true, timeMin: DateTime(2023, 8, 0));
-    final channel = Channel(
-        type: "web_hook",
-        address: 'https://webhook.site/2dd47aea-42e5-4cdd-9f6b-2e7f2de30cd4',
-        id: 'test_webhook');
+    // final channel = Channel(
+    //     type: "web_hook",
+    //     address: 'https://webhook.site/2dd47aea-42e5-4cdd-9f6b-2e7f2de30cd4',
+    //     id: 'test_webhook');
 
     final items = events.items;
 

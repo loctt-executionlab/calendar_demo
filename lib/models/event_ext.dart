@@ -12,6 +12,7 @@ extension CalendarEventExt on CalendarEvent {
     print(isAllDay);
 
     return Event(
+        colorId: '2',
         start: EventDateTime(
           date: isAllDay ? startTime : null,
           dateTime: !isAllDay ? startTime : null,

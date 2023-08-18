@@ -13,13 +13,25 @@ class CalendarEvent extends Event {
   });
 
   static CalendarEvent fromGoogleApiEvent(api.Event event) {
-    final startTime = event.start?.dateTime?.toUtc() ?? DateTime.now().toUtc();
-    final endTime = event.end?.dateTime?.toUtc() ?? startTime;
-    return CalendarEvent(
+    print(event.summary);
+    print(event.start?.dateTime?.toLocal());
+    print(event.end?.dateTime?.toLocal());
+    final startTime = event.start?.dateTime?.copyWith(isUtc: true) ??
+        event.start?.date?.copyWith(isUtc: true) ??
+        DateTime.now().copyWith(
+          isUtc: true,
+        );
+    final endTime = event.end?.dateTime?.copyWith(isUtc: true) ??
+        event.end?.date?.copyWith(isUtc: true) ??
+        startTime;
+    final calendarEvent = CalendarEvent(
       id: event.id ?? '',
       name: event.summary ?? '',
       start: startTime,
       end: endTime,
     );
+
+    print('is fullday event ${calendarEvent.isAllDay}');
+    return calendarEvent;
   }
 }

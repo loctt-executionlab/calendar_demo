@@ -15,7 +15,7 @@ GoogleSignIn googleSignIn(GoogleSignInRef ref) {
       CalendarApi.calendarEventsScope,
     ],
   );
-  instance.signInSilently();
+  instance.signInSilently(reAuthenticate: true);
   return instance;
 }
 

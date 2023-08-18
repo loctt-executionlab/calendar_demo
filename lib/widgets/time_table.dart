@@ -28,8 +28,8 @@ class WeeklyTimetable extends HookConsumerWidget {
       builder: (context, constraints) {
         return TimetableConfig<BasicEvent>(
           // Required:
-
           dateController: controller,
+
           eventBuilder: (context, event) => PartDayDraggableEvent(
             onDragStart: () {
               draggedEvents.value = [...draggedEvents.value..add(event)];
@@ -53,8 +53,8 @@ class WeeklyTimetable extends HookConsumerWidget {
           eventProvider: (date) {
             return events
                 .where((element) {
-                  return element.start.isAfter(date.start) &&
-                      element.end.isBefore(date.end);
+                  return !element.start.isBefore(date.start) &&
+                      !element.end.isAfter(date.end);
                 })
                 .map((e) => BasicEvent(
                     id: e.name,
@@ -63,15 +63,6 @@ class WeeklyTimetable extends HookConsumerWidget {
                     start: e.start.toLocal().copyWith(isUtc: true),
                     end: e.end.toLocal().copyWith(isUtc: true)))
                 .toList();
-
-            // return [
-            //   BasicEvent(
-            //       id: 'test',
-            //       title: 'test',
-            //       backgroundColor: Colors.blue,
-            //       start: date.start.copyWith(),
-            //       end: date.start.add(Duration(hours: 3)))
-            // ];
           },
           timeOverlayProvider: mergeTimeOverlayProviders([
             (context, date) {
@@ -84,8 +75,14 @@ class WeeklyTimetable extends HookConsumerWidget {
                   .toList();
             }
           ]),
-          allDayEventBuilder: (context, event, info) =>
-              BasicAllDayEventWidget(event, info: info),
+          allDayEventBuilder: (context, event, info) => BasicAllDayEventWidget(
+            event,
+            info: info,
+            style: BasicAllDayEventWidgetStyle(
+              context,
+              event,
+            ),
+          ),
           // callbacks: TimetableCallbacks(),
           theme: TimetableThemeData(context,
               nowIndicatorStyle: NowIndicatorStyle(context,
