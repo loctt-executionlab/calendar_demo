@@ -30,6 +30,12 @@ class EventNotifier extends _$EventNotifier {
     return [];
   }
 
+  Future<void> tryRefetchEvent() async {
+    print('try fetch event');
+    await _getEvent();
+    return;
+  }
+
   _getEventPeriodically() {
     if (api == null) {
       print(
@@ -37,8 +43,7 @@ class EventNotifier extends _$EventNotifier {
       return;
     }
     _getEvent();
-    final timer =
-        Timer.periodic(const Duration(seconds: 10), (timer) => _getEvent());
+    Timer.periodic(const Duration(minutes: 10), (timer) => _getEvent());
   }
 
   _getEvent() async {

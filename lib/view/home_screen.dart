@@ -1,3 +1,4 @@
+import 'package:demo_calendar/notifier/event_notifier.dart';
 import 'package:demo_calendar/router/router.dart';
 import 'package:demo_calendar/view/login_drawer.dart';
 import 'package:demo_calendar/widgets/time_table.dart';
@@ -15,6 +16,11 @@ class HomeScreen extends ConsumerWidget {
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: const Text('Calendar'),
         actions: [
+          IconButton(
+              onPressed: () {
+                ref.read(eventNotifierProvider.notifier).tryRefetchEvent();
+              },
+              icon: const Icon(Icons.refresh)),
           IconButton(
               onPressed: () {
                 context.goNamed(Routes.add.name);

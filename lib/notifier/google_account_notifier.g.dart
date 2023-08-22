@@ -6,7 +6,7 @@ part of 'google_account_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$googleSignInHash() => r'e50fff5bf481aefccd615512a967f183ab9c861c';
+String _$googleSignInHash() => r'6586f3856b65576794bd1863ee21dae88a95b595';
 
 /// See also [googleSignIn].
 @ProviderFor(googleSignIn)
@@ -21,7 +21,7 @@ final googleSignInProvider = Provider<GoogleSignIn>.internal(
 
 typedef GoogleSignInRef = ProviderRef<GoogleSignIn>;
 String _$onGoogleAccountChangeHash() =>
-    r'b688af7413e1fcb4a6653d851990ba944c545204';
+    r'e46bfa51e4d0be54f6036850565f424ceaecb918';
 
 /// See also [onGoogleAccountChange].
 @ProviderFor(onGoogleAccountChange)
@@ -38,7 +38,7 @@ final onGoogleAccountChangeProvider =
 
 typedef OnGoogleAccountChangeRef
     = AutoDisposeProviderRef<BehaviorSubject<GoogleSignInAccount?>>;
-String _$gCalendarApiHash() => r'035afdc515834c414aacef6137775017889d287c';
+String _$gCalendarApiHash() => r'a3c381772bdb25fcf020f8123197999260da85ac';
 
 /// See also [GCalendarApi].
 @ProviderFor(GCalendarApi)
@@ -53,5 +53,22 @@ final gCalendarApiProvider =
 );
 
 typedef _$GCalendarApi = AutoDisposeNotifier<CalendarApi?>;
+String _$googleSignInNotifierHash() =>
+    r'8ac0009b84aa27d845b3524f3505799a11ee3f11';
+
+/// See also [GoogleSignInNotifier].
+@ProviderFor(GoogleSignInNotifier)
+final googleSignInNotifierProvider =
+    AutoDisposeNotifierProvider<GoogleSignInNotifier, GoogleSignIn>.internal(
+  GoogleSignInNotifier.new,
+  name: r'googleSignInNotifierProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$googleSignInNotifierHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _$GoogleSignInNotifier = AutoDisposeNotifier<GoogleSignIn>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
