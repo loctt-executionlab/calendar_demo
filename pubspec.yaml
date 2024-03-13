@@ -55,6 +55,7 @@ dependencies:
   timetable: ^1.0.0-alpha.13
   collection: ^1.17.1
   go_router: ^10.0.0
+  device_calendar: ^4.3.2
 
 dev_dependencies:
   flutter_test:
