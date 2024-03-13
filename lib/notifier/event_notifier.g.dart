@@ -6,7 +6,7 @@ part of 'event_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$eventNotifierHash() => r'0110d89dfd84c41783484899322ae5d5864e3c88';
+String _$eventNotifierHash() => r'968474ba5146b9fcbcf907b4655289fefca79883';
 
 /// See also [EventNotifier].
 @ProviderFor(EventNotifier)
@@ -23,4 +23,4 @@ final eventNotifierProvider =
 
 typedef _$EventNotifier = AutoDisposeNotifier<List<CalendarEvent>>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

@@ -6,7 +6,7 @@ part of 'google_account_notifier.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$googleSignInHash() => r'e50fff5bf481aefccd615512a967f183ab9c861c';
+String _$googleSignInHash() => r'6586f3856b65576794bd1863ee21dae88a95b595';
 
 /// See also [googleSignIn].
 @ProviderFor(googleSignIn)
@@ -54,4 +54,4 @@ final gCalendarApiProvider =
 
 typedef _$GCalendarApi = AutoDisposeNotifier<CalendarApi?>;
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
