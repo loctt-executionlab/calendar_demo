@@ -34,7 +34,7 @@ migrate_working_dir/
 
 # Secrets
 *.env
-*.env.g.dart
+**/env.g.dart
 
 # Symbolication related
 app.*.symbols
