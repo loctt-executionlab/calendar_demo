@@ -18,7 +18,10 @@ class DeviceCalendarRepoDefault implements DeviceCalendarRepo {
   @override
   retrieveCalendars() async {
     final result = await plugin.retrieveCalendars();
-    return result.data?.map((element) => Calendar()).toList() ?? [];
+    return result.data
+            ?.map((element) => Calendar(calendarId: element.id))
+            .toList() ??
+        [];
   }
 
   @override

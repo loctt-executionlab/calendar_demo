@@ -7,7 +7,7 @@ part of 'device_calendar_notifier.dart';
 // **************************************************************************
 
 String _$deviceCalendarNotifierHash() =>
-    r'c1cfc491cf06f023b5bb5145fe255458b294d8f4';
+    r'868a37a33949ee529f96a90b968a769276d7d7a1';
 
 /// Copied from Dart SDK
 class _SystemHash {

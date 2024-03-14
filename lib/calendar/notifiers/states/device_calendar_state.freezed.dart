@@ -103,7 +103,7 @@ class __$$DeviceCalendarStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$DeviceCalendarStateImpl implements _DeviceCalendarState {
-  _$DeviceCalendarStateImpl(
+  const _$DeviceCalendarStateImpl(
       {required final List<Calendar> calendars,
       required final List<CalendarEvent> events})
       : _calendars = calendars,
@@ -155,7 +155,7 @@ class _$DeviceCalendarStateImpl implements _DeviceCalendarState {
 }
 
 abstract class _DeviceCalendarState implements DeviceCalendarState {
-  factory _DeviceCalendarState(
+  const factory _DeviceCalendarState(
       {required final List<Calendar> calendars,
       required final List<CalendarEvent> events}) = _$DeviceCalendarStateImpl;
 

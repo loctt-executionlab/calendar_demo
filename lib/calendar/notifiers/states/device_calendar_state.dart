@@ -5,12 +5,12 @@ part 'device_calendar_state.freezed.dart';
 
 @freezed
 class DeviceCalendarState with _$DeviceCalendarState {
-  factory DeviceCalendarState({
+  const factory DeviceCalendarState({
     required List<Calendar> calendars,
     required List<CalendarEvent> events,
   }) = _DeviceCalendarState;
 
-  factory DeviceCalendarState.initial() => DeviceCalendarState(
+  factory DeviceCalendarState.initial() => const DeviceCalendarState(
         calendars: [],
         events: [],
       );
