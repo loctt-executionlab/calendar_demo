@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'device_calendar.dart';
+part of 'calendar_plugin.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$deviceCalendarHash() => r'6f39e86bfb9beead4101a9d755d946c47e431a06';
+String _$deviceCalendarPluginHash() =>
+    r'14e7e043b7fafd6583e678af268fb9dce4220d0c';
 
-/// See also [DeviceCalendar].
-@ProviderFor(DeviceCalendar)
-final deviceCalendarProvider =
-    AutoDisposeNotifierProvider<DeviceCalendar, CalendarData>.internal(
-  DeviceCalendar.new,
-  name: r'deviceCalendarProvider',
+/// See also [deviceCalendarPlugin].
+@ProviderFor(deviceCalendarPlugin)
+final deviceCalendarPluginProvider =
+    AutoDisposeProvider<DeviceCalendarPlugin>.internal(
+  deviceCalendarPlugin,
+  name: r'deviceCalendarPluginProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$deviceCalendarHash,
+      : _$deviceCalendarPluginHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$DeviceCalendar = AutoDisposeNotifier<CalendarData>;
+typedef DeviceCalendarPluginRef = AutoDisposeProviderRef<DeviceCalendarPlugin>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
