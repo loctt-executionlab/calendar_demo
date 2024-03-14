@@ -1,5 +1,6 @@
 import 'package:calendar_demo/calendar/domains/model/models.dart';
-import 'package:calendar_demo/calendar/domains/repo/device_calendar_service.dart';
+import 'package:calendar_demo/calendar/domains/repo/device_calendar_repo.dart';
+import 'package:calendar_demo/calendar/domains/repo/device_calendar_repo_impl.dart';
 import 'package:calendar_demo/calendar/notifiers/states/device_calendar_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -7,8 +8,11 @@ part 'device_calendar_notifier.g.dart';
 
 @riverpod
 class DeviceCalendarNotifier extends _$DeviceCalendarNotifier {
+  late final DeviceCalendarRepo repo;
+
   @override
-  DeviceCalendarState build(DeviceCalendarRepo repo) {
+  DeviceCalendarState build() {
+    repo = ref.watch(deviceCalendarRepoDefaultProvider);
     _initGetAllEventFromAllCalendars();
     return DeviceCalendarState.initial();
   }
@@ -17,16 +21,15 @@ class DeviceCalendarNotifier extends _$DeviceCalendarNotifier {
     final calendars = await repo.retrieveCalendars();
     var events = <CalendarEvent>[];
 
-    for (var calendar in calendars) {
-      repo
+    await Future.forEach(calendars, (calendar) async {
+      await repo
           .queryEvents(
               FetchCalendarEventParam(calendarId: calendar.calendarId ?? ""))
-          .then((value) => events.addAll(value));
-    }
-
-    for (var calendar in state.calendars) {
-      getEvent(FetchCalendarEventParam(calendarId: calendar.calendarId ?? ""));
-    }
+          .then((value) {
+        events.addAll(value);
+      });
+    });
+    state = state.copyWith(events: events);
   }
 
   getCalendars() async {

@@ -26,9 +26,9 @@ class HomePage extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Calendar"),
+        title: const Text("Calendar"),
       ),
-      body: MonthlyCalendar(),
+      body: const MonthlyCalendar(),
     );
   }
 }

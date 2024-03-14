@@ -1,4 +1,5 @@
 import 'package:calendar_demo/calendar/domains/model/models.dart';
+import 'package:calendar_demo/calendar/notifiers/device_calendar_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -8,11 +9,12 @@ class MonthlyCalendar extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return TableCalendar(
+    final calendarData = ref.watch(deviceCalendarNotifierProvider);
+    return TableCalendar<CalendarEvent>(
       calendarFormat: CalendarFormat.month,
       availableCalendarFormats: const {CalendarFormat.month: 'month'},
       availableGestures: AvailableGestures.all,
-      rowHeight: 100,
+      rowHeight: 70,
       daysOfWeekVisible: true,
       headerStyle: HeaderStyle(
         titleTextFormatter: (date, locale) {
@@ -39,12 +41,13 @@ class MonthlyCalendar extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const SizedBox(
-                  height: 55,
+                  height: 20,
                 ),
-                ...events.map((e) => const Text(
-                      "a event",
+                ...events.map((e) => Text(
+                      e.title ?? "new event",
                       maxLines: 1,
-                      textScaler: TextScaler.linear(0.5),
+                      overflow: TextOverflow.ellipsis,
+                      textScaler: const TextScaler.linear(0.5),
                     ))
               ],
             ),
@@ -58,23 +61,13 @@ class MonthlyCalendar extends ConsumerWidget {
         }
         return false;
       },
-      eventLoader: (day) {
-        if (day.day == 15) {
-          return [
-            CalendarEvent(),
-            CalendarEvent(),
-            CalendarEvent(),
-            CalendarEvent(),
-          ];
-        } else if (day.day == 20) {
-          return [
-            CalendarEvent(),
-            CalendarEvent(),
-          ];
-        } else {
-          return const [];
-        }
-      },
+      eventLoader: (day) => calendarData.events.where((event) {
+        return (event.dateStarted?.year == day.year &&
+                event.dateStarted?.month == day.month &&
+                event.dateStarted?.day == day.day)
+            ? true
+            : false;
+      }).toList(),
       calendarStyle: const CalendarStyle(
         markersOffset: PositionedOffset(top: -50),
         canMarkersOverflow: false,
