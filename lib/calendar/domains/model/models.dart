@@ -1,5 +1,3 @@
-import 'package:device_calendar/device_calendar.dart';
-
 class Calendar {}
 
 class CalendarEvent {}
@@ -16,14 +14,4 @@ class FetchCalendarEventParam {
     this.startDate,
     this.endDate,
   });
-}
-
-extension CalendarEventParamConversion on FetchCalendarEventParam {
-  RetrieveEventsParams toApiParam() {
-    return RetrieveEventsParams(
-      eventIds: eventIds,
-      startDate: startDate,
-      endDate: endDate,
-    );
-  }
 }

@@ -7,7 +7,7 @@ part of 'device_calendar_notifier.dart';
 // **************************************************************************
 
 String _$deviceCalendarNotifierHash() =>
-    r'cc2926f010726c85728049677fc66142e742ddaf';
+    r'c1cfc491cf06f023b5bb5145fe255458b294d8f4';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -31,10 +31,10 @@ class _SystemHash {
 }
 
 abstract class _$DeviceCalendarNotifier
-    extends BuildlessAutoDisposeNotifier<DeviceCalendarData> {
+    extends BuildlessAutoDisposeNotifier<DeviceCalendarState> {
   late final DeviceCalendarRepo repo;
 
-  DeviceCalendarData build(
+  DeviceCalendarState build(
     DeviceCalendarRepo repo,
   );
 }
@@ -44,7 +44,7 @@ abstract class _$DeviceCalendarNotifier
 const deviceCalendarNotifierProvider = DeviceCalendarNotifierFamily();
 
 /// See also [DeviceCalendarNotifier].
-class DeviceCalendarNotifierFamily extends Family<DeviceCalendarData> {
+class DeviceCalendarNotifierFamily extends Family<DeviceCalendarState> {
   /// See also [DeviceCalendarNotifier].
   const DeviceCalendarNotifierFamily();
 
@@ -83,7 +83,7 @@ class DeviceCalendarNotifierFamily extends Family<DeviceCalendarData> {
 
 /// See also [DeviceCalendarNotifier].
 class DeviceCalendarNotifierProvider extends AutoDisposeNotifierProviderImpl<
-    DeviceCalendarNotifier, DeviceCalendarData> {
+    DeviceCalendarNotifier, DeviceCalendarState> {
   /// See also [DeviceCalendarNotifier].
   DeviceCalendarNotifierProvider(
     DeviceCalendarRepo repo,
@@ -114,7 +114,7 @@ class DeviceCalendarNotifierProvider extends AutoDisposeNotifierProviderImpl<
   final DeviceCalendarRepo repo;
 
   @override
-  DeviceCalendarData runNotifierBuild(
+  DeviceCalendarState runNotifierBuild(
     covariant DeviceCalendarNotifier notifier,
   ) {
     return notifier.build(
@@ -139,8 +139,8 @@ class DeviceCalendarNotifierProvider extends AutoDisposeNotifierProviderImpl<
   }
 
   @override
-  AutoDisposeNotifierProviderElement<DeviceCalendarNotifier, DeviceCalendarData>
-      createElement() {
+  AutoDisposeNotifierProviderElement<DeviceCalendarNotifier,
+      DeviceCalendarState> createElement() {
     return _DeviceCalendarNotifierProviderElement(this);
   }
 
@@ -159,14 +159,14 @@ class DeviceCalendarNotifierProvider extends AutoDisposeNotifierProviderImpl<
 }
 
 mixin DeviceCalendarNotifierRef
-    on AutoDisposeNotifierProviderRef<DeviceCalendarData> {
+    on AutoDisposeNotifierProviderRef<DeviceCalendarState> {
   /// The parameter `repo` of this provider.
   DeviceCalendarRepo get repo;
 }
 
 class _DeviceCalendarNotifierProviderElement
     extends AutoDisposeNotifierProviderElement<DeviceCalendarNotifier,
-        DeviceCalendarData> with DeviceCalendarNotifierRef {
+        DeviceCalendarState> with DeviceCalendarNotifierRef {
   _DeviceCalendarNotifierProviderElement(super.provider);
 
   @override

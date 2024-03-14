@@ -1,26 +1,31 @@
 import 'package:calendar_demo/calendar/domains/model/models.dart';
-import 'package:device_calendar/device_calendar.dart';
+import 'package:calendar_demo/calendar/services/calendar_plugin.dart';
+import 'package:device_calendar/device_calendar.dart' as api;
 
 abstract class DeviceCalendarRepo {
   /// get all calendars from different accounts
-  retrieveCalendars();
+  Future<List<Calendar>> retrieveCalendars();
 
   /// query event from a specific calendar
-  queryEvents(FetchCalendarEventParam param);
+  Future<List<CalendarEvent>> queryEvents(FetchCalendarEventParam param);
 }
 
 class DeviceCalendarRepoDefault implements DeviceCalendarRepo {
-  final DeviceCalendarPlugin plugin;
+  final api.DeviceCalendarPlugin plugin;
 
   DeviceCalendarRepoDefault({required this.plugin});
 
   @override
   retrieveCalendars() async {
-    return await plugin.retrieveCalendars();
+    final result = await plugin.retrieveCalendars();
+    return result.data?.map((element) => Calendar()).toList() ?? [];
   }
 
   @override
   queryEvents(FetchCalendarEventParam param) async {
-    return await plugin.retrieveEvents(param.calendarId, param.toApiParam());
+    final event =
+        await plugin.retrieveEvents(param.calendarId, param.toApiParam());
+    final result = event.data?.map((element) => CalendarEvent()).toList() ?? [];
+    return result;
   }
 }
