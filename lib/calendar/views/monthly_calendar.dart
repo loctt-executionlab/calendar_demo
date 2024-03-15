@@ -55,12 +55,6 @@ class MonthlyCalendar extends ConsumerWidget {
         },
       ),
       weekNumbersVisible: false,
-      selectedDayPredicate: (day) {
-        if (DateUtils.isSameDay(day, DateTime(2023, 7, 25))) {
-          return true;
-        }
-        return false;
-      },
       eventLoader: (day) => calendarData.events.where((event) {
         return (event.dateStarted?.year == day.year &&
                 event.dateStarted?.month == day.month &&
@@ -75,6 +69,46 @@ class MonthlyCalendar extends ConsumerWidget {
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: DateTime.now(),
+    );
+  }
+}
+
+class EventCell extends StatelessWidget {
+  const EventCell({
+    super.key,
+    required this.events,
+    this.colorCode = 0,
+  });
+  final List<CalendarEvent> events;
+  final int? colorCode;
+
+  Widget buildEvent(CalendarEvent event) {
+    return const Row(
+      children: [Text("俺のイタリアン")],
+    );
+  }
+
+  List<Widget> buildEventColumn() {
+    if (events.isEmpty) return [];
+
+    var result = <Widget>[];
+    for (var i = 0; i < 3 || i < events.length; i++) {
+      result.add(buildEvent(events[i]));
+    }
+    if (events.length > 3) {
+      final leftoverEventCount = events.length - 3;
+      result.add(Text("+ $leftoverEventCount"));
+    }
+    return result;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ...buildEventColumn(),
+      ],
     );
   }
 }
