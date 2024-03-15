@@ -19,8 +19,9 @@ class DeviceCalendarNotifier extends _$DeviceCalendarNotifier {
 
   _initGetAllEventFromAllCalendars() async {
     final calendars = await repo.retrieveCalendars();
-    var events = <CalendarEvent>[];
+    state = state.copyWith(calendars: calendars);
 
+    var events = <CalendarEvent>[];
     await Future.forEach(calendars, (calendar) async {
       await repo
           .queryEvents(
@@ -40,6 +41,10 @@ class DeviceCalendarNotifier extends _$DeviceCalendarNotifier {
   getEvent(FetchCalendarEventParam param) async {
     final events = await repo.queryEvents(param);
     state = state.copyWith(events: events);
+  }
+
+  setEvent(CalendarEvent event) async {
+    repo.addOrUpdateEvent(event);
   }
 }
 

@@ -7,6 +7,7 @@ class Calendar {
   final String? accountType;
   final String? name;
   final int? colorCode;
+  final bool? isReadOnly;
 
   Calendar({
     this.calendarId,
@@ -15,6 +16,7 @@ class Calendar {
     this.name,
     this.colorCode,
     this.isDefault,
+    this.isReadOnly,
   });
 }
 

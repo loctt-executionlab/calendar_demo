@@ -1,4 +1,5 @@
 import 'package:calendar_demo/calendar/views/monthly_calendar.dart';
+import 'package:calendar_demo/calendar/views/new_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -28,7 +29,20 @@ class HomePage extends ConsumerWidget {
       appBar: AppBar(
         title: const Text("Calendar"),
       ),
-      body: const MonthlyCalendar(),
+      body: ListView(
+        children: [
+          const MonthlyCalendar(),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const NewEventView(),
+                    ));
+              },
+              child: const Text("add events")),
+        ],
+      ),
     );
   }
 }

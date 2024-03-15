@@ -6,4 +6,6 @@ abstract class DeviceCalendarRepo {
 
   /// query event from a specific calendar
   Future<List<CalendarEvent>> queryEvents(FetchCalendarEventParam param);
+
+  Future<void> addOrUpdateEvent(CalendarEvent event);
 }

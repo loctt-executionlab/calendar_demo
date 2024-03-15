@@ -1,6 +1,7 @@
 import 'package:calendar_demo/calendar/domains/model/models.dart';
 import 'package:calendar_demo/calendar/domains/repo/device_calendar_repo.dart';
 import 'package:device_calendar/device_calendar.dart' as api;
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 class DeviceCalendarRepoDefault implements DeviceCalendarRepo {
@@ -28,8 +29,14 @@ class DeviceCalendarRepoDefault implements DeviceCalendarRepo {
     return result;
   }
 
-  addOrUpdateEvent(CalendarEvent event) async {
-    plugin.createOrUpdateEvent(_Conversion.toAPIEvent(event));
+  @override
+  Future<void> addOrUpdateEvent(CalendarEvent event) async {
+    print("event ${event.title} ${event.dateStarted} || ${event.dateEnded}");
+    final result =
+        await plugin.createOrUpdateEvent(_Conversion.toAPIEvent(event));
+    result?.errors.map((e) {
+      print("Error occured: ${e.errorCode} || ${e.errorMessage}");
+    });
   }
 }
 
@@ -39,8 +46,10 @@ extension CalendarConvert on api.Calendar {
       calendarId: id,
       accountName: accountName,
       accountType: accountType,
+      name: name,
       isDefault: isDefault,
       colorCode: color,
+      isReadOnly: isReadOnly,
     );
   }
 }
@@ -60,6 +69,7 @@ class _Conversion {
   static api.Event toAPIEvent(CalendarEvent event) {
     return api.Event(
       event.calendarId,
+      title: event.title,
       eventId: event.eventId,
       allDay: event.isAllDay,
       start: event.dateStarted,
