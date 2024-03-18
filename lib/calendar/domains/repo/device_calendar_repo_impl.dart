@@ -1,8 +1,8 @@
 import 'package:calendar_demo/calendar/domains/model/models.dart';
 import 'package:calendar_demo/calendar/domains/repo/device_calendar_repo.dart';
 import 'package:device_calendar/device_calendar.dart' as api;
-import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:timezone/timezone.dart';
 
 class DeviceCalendarRepoDefault implements DeviceCalendarRepo {
   final api.DeviceCalendarPlugin plugin;
@@ -30,13 +30,19 @@ class DeviceCalendarRepoDefault implements DeviceCalendarRepo {
   }
 
   @override
-  Future<void> addOrUpdateEvent(CalendarEvent event) async {
+  Future<void> addOrUpdateEvent(Event event) async {
     print("event ${event.title} ${event.dateStarted} || ${event.dateEnded}");
     final result =
         await plugin.createOrUpdateEvent(_Conversion.toAPIEvent(event));
     result?.errors.map((e) {
       print("Error occured: ${e.errorCode} || ${e.errorMessage}");
     });
+  }
+
+  @override
+  Future<bool> requestPermission() async {
+    final result = await plugin.requestPermissions();
+    return result.data ?? false;
   }
 }
 
@@ -55,8 +61,13 @@ extension CalendarConvert on api.Calendar {
 }
 
 class _Conversion {
-  static CalendarEvent toCalendarEvent(api.Event event) {
-    return CalendarEvent(
+  static TZDateTime fromDateTime(DateTime dateTime) {
+    return TZDateTime.fromMillisecondsSinceEpoch(
+        api.getLocation("America/Detroit"), dateTime.millisecondsSinceEpoch);
+  }
+
+  static Event toCalendarEvent(api.Event event) {
+    return Event(
       calendarId: event.calendarId,
       eventId: event.eventId,
       dateEnded: event.end,
@@ -66,14 +77,14 @@ class _Conversion {
     );
   }
 
-  static api.Event toAPIEvent(CalendarEvent event) {
+  static api.Event toAPIEvent(Event event) {
     return api.Event(
       event.calendarId,
       title: event.title,
       eventId: event.eventId,
       allDay: event.isAllDay,
-      start: event.dateStarted,
-      end: event.dateEnded,
+      start: null,
+      end: null,
     );
   }
 }

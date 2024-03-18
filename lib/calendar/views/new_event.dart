@@ -57,7 +57,7 @@ class NewEventView extends HookConsumerWidget {
                     ? () {
                         ref
                             .read(deviceCalendarNotifierProvider.notifier)
-                            .setEvent(CalendarEvent(
+                            .setEvent(Event(
                               calendarId: selectedCalendar.value?.calendarId,
                               title: eventName.text,
                               dateStarted: TZDateTime.from(

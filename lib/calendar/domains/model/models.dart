@@ -20,16 +20,16 @@ class Calendar {
   });
 }
 
-class CalendarEvent {
+class Event {
   final String? eventId;
   final String? calendarId;
-  final TZDateTime? dateStarted;
-  final TZDateTime? dateEnded;
+  final DateTime? dateStarted;
+  final DateTime? dateEnded;
   final bool? isAllDay;
   final String? title;
   final int? color;
 
-  CalendarEvent({
+  Event({
     this.eventId,
     this.calendarId,
     this.dateStarted,

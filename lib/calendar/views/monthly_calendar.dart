@@ -7,49 +7,92 @@ import 'package:table_calendar/table_calendar.dart';
 class MonthlyCalendar extends ConsumerWidget {
   const MonthlyCalendar({super.key});
 
+  Widget _buildItem(Event event) {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(8, 0, 0, 4),
+      child: Row(
+        children: [
+          Container(
+            width: 1,
+            height: 9,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(1),
+              color: Colors.blue,
+            ),
+          ),
+          const SizedBox(width: 4),
+          Expanded(
+            child: Text(
+              event.title ?? "",
+              maxLines: 1,
+              style: const TextStyle(
+                fontSize: 8,
+                overflow: TextOverflow.visible,
+              ),
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  List<Widget> buildEventColumn(List<Event> events) {
+    if (events.isEmpty) return [];
+
+    var result = <Widget>[];
+    for (var i = 0; i < 3 || i < events.length; i++) {
+      result.add(_buildItem(events[i]));
+    }
+    if (events.length > 3) {
+      final leftoverEventCount = events.length - 3;
+      result.add(
+        Text(
+          "+$leftoverEventCount",
+          style: const TextStyle(
+            fontSize: 8,
+            height: 1,
+          ),
+        ),
+      );
+    }
+    return result;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarData = ref.watch(deviceCalendarNotifierProvider);
-    return TableCalendar<CalendarEvent>(
+    return TableCalendar<Event>(
       calendarFormat: CalendarFormat.month,
       availableCalendarFormats: const {CalendarFormat.month: 'month'},
       availableGestures: AvailableGestures.all,
       rowHeight: 70,
       daysOfWeekVisible: true,
-      headerStyle: HeaderStyle(
-        titleTextFormatter: (date, locale) {
-          return "Hom nay la ${date.month}";
-        },
-      ),
+      // headerStyle: HeaderStyle(
+      //   titleTextFormatter: (date, locale) {
+      //     return "Hom nay la ${date.month}";
+      //   },
+      // ),
+      locale: 'ja_JP',
       calendarBuilders: CalendarBuilders(
         defaultBuilder: (context, day, focusedDay) {
-          return CalendarCell(
+          print("build date");
+          return DateCell(
             date: day.day.toString(),
-            events: [],
           );
         },
+        weekNumberBuilder: (context, weekNumber) {},
         outsideBuilder: (context, day, focusedDay) {
-          return CalendarCell(date: day.day.toString(), events: []);
+          return DateCell(date: day.day.toString());
         },
         todayBuilder: (context, day, focusedDay) {
-          return CalendarCell(date: day.day.toString(), events: []);
+          return DateCell(date: day.day.toString());
         },
         markerBuilder: (context, day, events) {
           return Container(
             color: Colors.transparent,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const SizedBox(
-                  height: 20,
-                ),
-                ...events.map((e) => Text(
-                      e.title ?? "new event",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      textScaler: const TextScaler.linear(0.5),
-                    ))
-              ],
+              children: buildEventColumn(events),
             ),
           );
         },
@@ -62,10 +105,7 @@ class MonthlyCalendar extends ConsumerWidget {
             ? true
             : false;
       }).toList(),
-      calendarStyle: const CalendarStyle(
-        markersOffset: PositionedOffset(top: -50),
-        canMarkersOverflow: false,
-      ),
+      calendarStyle: const CalendarStyle(),
       firstDay: DateTime.utc(2010, 10, 16),
       lastDay: DateTime.utc(2030, 3, 14),
       focusedDay: DateTime.now(),
@@ -79,10 +119,10 @@ class EventCell extends StatelessWidget {
     required this.events,
     this.colorCode = 0,
   });
-  final List<CalendarEvent> events;
+  final List<Event> events;
   final int? colorCode;
 
-  Widget buildEvent(CalendarEvent event) {
+  Widget buildEvent(Event event) {
     return const Row(
       children: [Text("俺のイタリアン")],
     );
@@ -113,12 +153,10 @@ class EventCell extends StatelessWidget {
   }
 }
 
-class CalendarCell extends StatelessWidget {
-  const CalendarCell({super.key, required this.date, required this.events});
+class DateCell extends StatelessWidget {
+  const DateCell({super.key, required this.date});
 
   final String date;
-
-  final List<CalendarEvent> events;
 
   @override
   Widget build(BuildContext context) {
@@ -126,30 +164,12 @@ class CalendarCell extends StatelessWidget {
       height: 70,
       child: Column(
         children: [
-          Text(date),
-          ...buildEventColumn(),
+          Text(
+            date,
+            style: const TextStyle(fontSize: 14),
+          ),
         ],
       ),
-    );
-  }
-
-  List<Widget> buildEventColumn() {
-    if (events.isEmpty) return [];
-
-    var result = <Widget>[];
-    for (var i = 0; i < 3 || i < events.length; i++) {
-      result.add(buildEvent(events[i]));
-    }
-    if (events.length > 3) {
-      final leftoverEventCount = events.length - 3;
-      result.add(Text("+ $leftoverEventCount"));
-    }
-    return result;
-  }
-
-  Widget buildEvent(CalendarEvent event) {
-    return const Row(
-      children: [Text("俺のイタリアン")],
     );
   }
 }

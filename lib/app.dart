@@ -1,7 +1,9 @@
+import 'package:calendar_demo/calendar/notifiers/device_calendar_notifier.dart';
 import 'package:calendar_demo/calendar/views/monthly_calendar.dart';
 import 'package:calendar_demo/calendar/views/new_event.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -11,6 +13,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('en'),
+        Locale('es'),
+      ],
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
@@ -33,7 +44,11 @@ class HomePage extends ConsumerWidget {
         children: [
           const MonthlyCalendar(),
           ElevatedButton(
-              onPressed: () {
+              onPressed: () async {
+                final permit = await ref
+                    .read(deviceCalendarNotifierProvider.notifier)
+                    .requestPermission();
+                if (!permit) return;
                 Navigator.push(
                     context,
                     MaterialPageRoute(

@@ -5,7 +5,9 @@ abstract class DeviceCalendarRepo {
   Future<List<Calendar>> retrieveCalendars();
 
   /// query event from a specific calendar
-  Future<List<CalendarEvent>> queryEvents(FetchCalendarEventParam param);
+  Future<List<Event>> queryEvents(FetchCalendarEventParam param);
 
-  Future<void> addOrUpdateEvent(CalendarEvent event);
+  Future<void> addOrUpdateEvent(Event event);
+
+  Future<bool> requestPermission();
 }

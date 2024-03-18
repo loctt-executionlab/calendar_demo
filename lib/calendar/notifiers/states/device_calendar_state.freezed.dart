@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$DeviceCalendarState {
   List<Calendar> get calendars => throw _privateConstructorUsedError;
-  List<CalendarEvent> get events => throw _privateConstructorUsedError;
+  List<Event> get events => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $DeviceCalendarStateCopyWith<DeviceCalendarState> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $DeviceCalendarStateCopyWith<$Res> {
           DeviceCalendarState value, $Res Function(DeviceCalendarState) then) =
       _$DeviceCalendarStateCopyWithImpl<$Res, DeviceCalendarState>;
   @useResult
-  $Res call({List<Calendar> calendars, List<CalendarEvent> events});
+  $Res call({List<Calendar> calendars, List<Event> events});
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$DeviceCalendarStateCopyWithImpl<$Res, $Val extends DeviceCalendarState>
       events: null == events
           ? _value.events
           : events // ignore: cast_nullable_to_non_nullable
-              as List<CalendarEvent>,
+              as List<Event>,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$DeviceCalendarStateImplCopyWith<$Res>
       __$$DeviceCalendarStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<Calendar> calendars, List<CalendarEvent> events});
+  $Res call({List<Calendar> calendars, List<Event> events});
 }
 
 /// @nodoc
@@ -95,7 +95,7 @@ class __$$DeviceCalendarStateImplCopyWithImpl<$Res>
       events: null == events
           ? _value._events
           : events // ignore: cast_nullable_to_non_nullable
-              as List<CalendarEvent>,
+              as List<Event>,
     ));
   }
 }
@@ -105,7 +105,7 @@ class __$$DeviceCalendarStateImplCopyWithImpl<$Res>
 class _$DeviceCalendarStateImpl implements _DeviceCalendarState {
   const _$DeviceCalendarStateImpl(
       {required final List<Calendar> calendars,
-      required final List<CalendarEvent> events})
+      required final List<Event> events})
       : _calendars = calendars,
         _events = events;
 
@@ -117,9 +117,9 @@ class _$DeviceCalendarStateImpl implements _DeviceCalendarState {
     return EqualUnmodifiableListView(_calendars);
   }
 
-  final List<CalendarEvent> _events;
+  final List<Event> _events;
   @override
-  List<CalendarEvent> get events {
+  List<Event> get events {
     if (_events is EqualUnmodifiableListView) return _events;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_events);
@@ -157,12 +157,12 @@ class _$DeviceCalendarStateImpl implements _DeviceCalendarState {
 abstract class _DeviceCalendarState implements DeviceCalendarState {
   const factory _DeviceCalendarState(
       {required final List<Calendar> calendars,
-      required final List<CalendarEvent> events}) = _$DeviceCalendarStateImpl;
+      required final List<Event> events}) = _$DeviceCalendarStateImpl;
 
   @override
   List<Calendar> get calendars;
   @override
-  List<CalendarEvent> get events;
+  List<Event> get events;
   @override
   @JsonKey(ignore: true)
   _$$DeviceCalendarStateImplCopyWith<_$DeviceCalendarStateImpl> get copyWith =>
