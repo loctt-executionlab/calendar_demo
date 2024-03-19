@@ -73,6 +73,12 @@ class DeviceCalendarNotifier extends _$DeviceCalendarNotifier {
         title: "Test event 1",
         dateStarted: TZDateTime.now(getLocation("America/Detroit")),
       ),
+      Event(
+        calendarId: "1",
+        eventId: "4",
+        title: "Test event 1",
+        dateStarted: TZDateTime.now(getLocation("America/Detroit")),
+      ),
     ];
   }
 }
