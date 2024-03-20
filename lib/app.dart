@@ -1,6 +1,8 @@
 import 'package:calendar_demo/calendar/notifiers/device_calendar_notifier.dart';
+import 'package:calendar_demo/calendar/views/login_view.dart';
 import 'package:calendar_demo/calendar/views/monthly_calendar.dart';
 import 'package:calendar_demo/calendar/views/new_event.dart';
+import 'package:calendar_demo/calendar/views/otp_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -26,7 +28,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const OTPView(),
     );
   }
 }

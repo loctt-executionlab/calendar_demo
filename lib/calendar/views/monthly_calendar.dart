@@ -1,23 +1,20 @@
 import 'package:calendar_demo/calendar/domains/model/models.dart';
 import 'package:calendar_demo/calendar/notifiers/device_calendar_notifier.dart';
 import 'package:calendar_demo/calendar/views/components.dart';
-import 'package:calendar_demo/utils/dateUtils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class MonthlyCalendar extends ConsumerWidget {
+class MonthlyCalendar extends HookConsumerWidget {
   const MonthlyCalendar({super.key});
-
-  Iterable<Event> _filterEvent(DateTime day, List<Event> events) {
-    return events.where((event) => event.dateStarted?.isSameDate(day) ?? false);
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final calendarData = ref.watch(deviceCalendarNotifierProvider);
-    final events = ref
-        .watch(deviceCalendarNotifierProvider.select((value) => value.events));
+    // initializeDateFormatting();
+    final dowDatFormat = useMemoized(() => DateFormat.E('ja'));
     return TableCalendar<Event>(
       calendarFormat: CalendarFormat.month,
       availableCalendarFormats: const {CalendarFormat.month: 'month'},
@@ -29,9 +26,14 @@ class MonthlyCalendar extends ConsumerWidget {
       //     return "Hom nay la ${date.month}";
       //   },
       // ),
+      daysOfWeekHeight: 23,
 
       locale: 'ja_JP',
       calendarBuilders: CalendarBuilders(
+        dowBuilder: (context, day) {
+          if (day.weekday == DateTime.sunday) {}
+          return Center(child: Text(dowDatFormat.format(day)));
+        },
         defaultBuilder: (context, day, focusedDay) {
           return Container(
             color: Colors.red.withOpacity(0.1),

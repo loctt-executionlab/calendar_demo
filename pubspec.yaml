@@ -48,6 +48,9 @@ dependencies:
   flutter_hooks: ^0.20.5
   flutter_localizations:
     sdk: flutter
+  otp_text_field: ^1.1.3
+  flutter_otp_text_field: ^1.1.2+1
+  dio: ^5.4.1
 
 dev_dependencies:
   flutter_test:
